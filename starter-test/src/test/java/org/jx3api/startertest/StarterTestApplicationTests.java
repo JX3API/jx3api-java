@@ -2,35 +2,30 @@ package org.jx3api.startertest;
 
 import jakarta.annotation.Resource;
 import jx3api.api.config.EnableJX3Api;
-import jx3api.api.config.JX3ApiHttpAutoConfiguration;
+import jx3api.api.http.ApiService;
 import jx3api.api.ws.CustomWebSocketHandler;
 import jx3api.api.ws.IWsDataPushService;
 import jx3api.api.ws.WebSocketClientInitializer;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 @SpringBootTest
-
 @EnableJX3Api
-@TestPropertySource(locations = "classpath:test.properties")
+@TestPropertySource(locations = "classpath:test-local.properties")
 class StarterTestApplicationTests {
-    @Autowired
-    private ApplicationContext applicationContext;
     @Resource
     private WebSocketClientInitializer webSocketClientInitializer;
     @Resource
-    private JX3ApiHttpAutoConfiguration jx3ApiHttpAutoConfiguration;
-    @Resource
     private IWsDataPushService iWsDataPushService;
+    @Resource
+    private ApiService apiService;
 
     @Test
-    void contextLoads() throws Exception {
+    void wsTest() throws Exception {
         // 创建模拟的 WebSocketSession
         WebSocketSession mockSession = createMockWebSocketSession();
         CustomWebSocketHandler customWebSocketHandler = new CustomWebSocketHandler(webSocketClientInitializer,
@@ -53,5 +48,12 @@ class StarterTestApplicationTests {
     private WebSocketSession createMockWebSocketSession() {
         // 创建模拟的 WebSocketSession
         return Mockito.mock(WebSocketSession.class);
+    }
+
+    @Test
+    void apiTest() {
+//        System.out.println(apiService.activeCalendar("长安城", 7));
+        System.out.println(apiService.viewActiveCurrent("长安城", 7, "神奇", 1));
+//        System.out.println(apiService.examAnswer("古琴有几根弦", 10));
     }
 }
