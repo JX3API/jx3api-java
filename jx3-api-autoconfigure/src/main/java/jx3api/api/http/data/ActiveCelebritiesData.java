@@ -24,7 +24,7 @@ public class ActiveCelebritiesData {
     private String site;
 
     @JsonProperty("desc")
-    private String description;
+    private String desc;
 
     @JsonProperty("icon")
     private int icon;

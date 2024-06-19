@@ -22,8 +22,4 @@ public class ApiProperties {
      * api访问token，有些api接口，需要校验你的token
      */
     private String apiToken;
-    /**
-     * api部分接口需要使用到的ticket
-     */
-    private String ticket;
 }

@@ -1,7 +1,10 @@
 package jx3api.api.http.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jx3api.api.util.TimeUtils;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * 徒弟列表
@@ -11,6 +14,19 @@ import lombok.Data;
  */
 @Data
 public class MemberStudentData {
+
+    @JsonProperty("zone")
+    private String zone;
+    @JsonProperty("server")
+    private String server;
+
+    @JsonProperty("data")
+    private List<StudentInfo> data;
+
+}
+
+@Data
+class StudentInfo {
     @JsonProperty("roleId")
     private Integer roleId;
 
@@ -45,6 +61,9 @@ public class MemberStudentData {
     private String comment;
 
     @JsonProperty("time")
-    private Long time;
+    private String time;
 
+    public void setTime(long time) {
+        this.time = TimeUtils.timeFormatting(time);
+    }
 }

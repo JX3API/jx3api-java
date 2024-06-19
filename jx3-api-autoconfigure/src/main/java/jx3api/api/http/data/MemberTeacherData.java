@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jx3api.api.util.TimeUtils;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * 师父列表
  *
@@ -12,6 +14,18 @@ import lombok.Data;
  */
 @Data
 public class MemberTeacherData {
+    @JsonProperty("zone")
+    private String zone;
+    @JsonProperty("server")
+    private String server;
+
+    @JsonProperty("data")
+    private List<TeacherInfo> data;
+}
+
+@Data
+class TeacherInfo {
+
     @JsonProperty("roleId")
     private Integer roleId;
 

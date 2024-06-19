@@ -10,7 +10,7 @@ import lombok.Data;
  * @since 1.0.0
  */
 @Data
-public class SaohuaRandom {
+public class SaohuaRandomData {
 
     @JsonProperty("id")
     private Integer id;

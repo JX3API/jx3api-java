@@ -11,15 +11,21 @@ import lombok.Data;
  */
 @Data
 public class WebNewsAllNewsData {
-    @JsonProperty("old_version")
-    private String oldVersion;
+    @JsonProperty("id")
+    private Long id;
 
-    @JsonProperty("new_version")
-    private String newVersion;
+    @JsonProperty("value")
+    private Long value;
 
-    @JsonProperty("package_num")
-    private Integer packageNum;
+    @JsonProperty("type")
+    private String type;
 
-    @JsonProperty("package_size")
-    private String packageSize;
+    @JsonProperty("title")
+    private String title;
+
+    @JsonProperty("date")
+    private String date;
+
+    @JsonProperty("url")
+    private String url;
 }
