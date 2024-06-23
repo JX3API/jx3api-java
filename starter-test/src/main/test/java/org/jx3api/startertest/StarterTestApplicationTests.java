@@ -1,4 +1,4 @@
-package src.test.java.org.jx3api.startertest;
+package org.jx3api.startertest;
 
 import jakarta.annotation.Resource;
 import jx3api.api.config.EnableJX3Api;
@@ -15,7 +15,7 @@ import org.springframework.web.socket.WebSocketSession;
 
 @SpringBootTest
 @EnableJX3Api
-@TestPropertySource(locations = "classpath:test-local.properties")
+@TestPropertySource(locations = "classpath:test.properties")
 class StarterTestApplicationTests {
     @Resource
     private WebSocketClientInitializer webSocketClientInitializer;
@@ -43,6 +43,19 @@ class StarterTestApplicationTests {
                 "  }\n" +
                 "}");
         customWebSocketHandler.handleMessage(mockSession, message);
+
+        message = new TextMessage("{\n" +
+                "  \"action\": 2004,\n" +
+                "  \"data\": {\n" +
+                "    \"subclass\": \"818\",\n" +
+                "    \"server\": \"梦江南\",\n" +
+                "    \"name\": \"双梦镇\",\n" +
+                "    \"title\": \"【818】问一问现在团里有需求还玄晶外拍是可以的吗\",\n" +
+                "    \"url\": \"https://tieba.baidu.com/p/8437009794\",\n" +
+                "    \"date\": \"2023-05-30\"\n" +
+                "  }\n" +
+                "}");
+        customWebSocketHandler.handleMessage(mockSession,message);
     }
 
     private WebSocketSession createMockWebSocketSession() {
