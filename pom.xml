@@ -18,6 +18,7 @@
     <modules>
         <module>jx3-api-starter</module>
         <module>jx3-api-autoconfigure</module>
+        <module>starter-test</module>
     </modules>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

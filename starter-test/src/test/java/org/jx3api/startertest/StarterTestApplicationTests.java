@@ -1,4 +1,4 @@
-package org.jx3api.startertest;
+package src.test.java.org.jx3api.startertest;
 
 import jakarta.annotation.Resource;
 import jx3api.api.config.EnableJX3Api;
@@ -53,7 +53,7 @@ class StarterTestApplicationTests {
     @Test
     void apiTest() {
 //        System.out.println(apiService.activeCalendar("长安城", 7));
-        System.out.println(apiService.viewActiveCurrent("长安城", 7, "神奇", 1));
+        System.out.println(apiService.activeCalendarView("长安城"));
 //        System.out.println(apiService.examAnswer("古琴有几根弦", 10));
     }
 }
