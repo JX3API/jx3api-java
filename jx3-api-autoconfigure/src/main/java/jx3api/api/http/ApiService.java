@@ -1719,7 +1719,7 @@ public class ApiService {
      * @param name   烟花名称，筛选记录
      * @param robot  描述文本，一般设置机器人名称
      * @param cache  设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭
-     * @return 图骗你之
+     * @return 图片地址
      */
     public BaseResult<String> watchStatisticalView(Integer scale, String server, String name, String robot, Integer cache) {
         MethodEnum methodEnum = MethodEnum.VIEW_WATCH_STATISTICAL;
@@ -1954,7 +1954,7 @@ public class ApiService {
      * 酷狗音乐
      *
      * @param name 歌曲名称，查找酷狗音乐的音乐编号。
-     * @return MusicNeteaseData List
+     * @return MusicKugouData List
      */
     public BaseResult<List<MusicKugouData>> musicKugou(String name) {
         MethodEnum methodEnum = MethodEnum.DATA_MUSIC_KUGOU;
@@ -1969,7 +1969,7 @@ public class ApiService {
      * 骗子记录
      *
      * @param uin 用户QQ号，查找是否存在行骗记录；
-     * @return MusicNeteaseData List
+     * @return FraudDetailData List
      */
     public BaseResult<List<FraudDetailData>> fraudDetail(Long uin) {
         MethodEnum methodEnum = MethodEnum.DATA_FRAUD_DETAIL;
