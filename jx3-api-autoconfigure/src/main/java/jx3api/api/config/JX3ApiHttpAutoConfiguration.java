@@ -41,9 +41,6 @@ public class JX3ApiHttpAutoConfiguration {
         if (StringUtils.isBlank(apiProperties.getApiToken())) {
             logger.error("未获取到ApiToken，付费接口将无法使用");
         }
-        if (StringUtils.isBlank(apiProperties.getTicket())) {
-            logger.error("未获取到ticket，部分需要使用到ticket的接口将无法使用");
-        }
         return new ApiService(apiProperties);
     }
 }

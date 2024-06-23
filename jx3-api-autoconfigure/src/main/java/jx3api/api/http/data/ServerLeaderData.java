@@ -1,6 +1,7 @@
 package jx3api.api.http.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jx3api.api.util.TimeUtils;
 import lombok.Data;
 
 import java.util.List;
@@ -41,8 +42,16 @@ class CastleData {
     private String strStatus;
 
     @JsonProperty("start_time")
-    private long startTime;
+    private String startTime;
 
     @JsonProperty("end_time")
-    private long endTime;
+    private String endTime;
+
+    public void setStartTime(long startTime) {
+        this.startTime = TimeUtils.timeFormatting(startTime);;
+    }
+
+    public void setEndTime(long endTime) {
+        this.endTime = TimeUtils.timeFormatting(endTime);;
+    }
 }

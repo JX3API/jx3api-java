@@ -25,6 +25,9 @@ public class TimeUtils {
      * @return yyyy-MM-dd HH:mm:ss
      */
     public static String timeFormatting(long timestamp) {
+        if (timestamp <= 0) {
+            return "";
+        }
         // 默认使用Asia/Shanghai,毕竟剑三也不会用别的时区
         LocalDateTime time = LocalDateTime.ofInstant(Instant.ofEpochSecond(timestamp), ZoneId.of("Asia/Shanghai"));
         return time.format(DATETIME_FORMATTER);

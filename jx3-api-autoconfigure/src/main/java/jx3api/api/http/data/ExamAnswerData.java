@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 public class ExamAnswerData {
     @JsonProperty("id")
-    private int id;
+    private Integer id;
 
     @JsonProperty("question")
     private String question;
@@ -21,10 +21,10 @@ public class ExamAnswerData {
     private String answer;
 
     @JsonProperty("correctness")
-    private int correctness;
+    private Integer correctness;
 
     @JsonProperty("index")
-    private int index;
+    private Integer index;
 
     @JsonProperty("pinyin")
     private String pinyin;

@@ -2,7 +2,8 @@ package jx3api.api.test.normal;
 
 import jx3api.api.config.ApiProperties;
 import jx3api.api.http.ApiService;
-import jx3api.api.http.data.ActiveCurrentData;
+import jx3api.api.http.BaseResult;
+import jx3api.api.http.data.*;
 import jx3api.api.ws.action.WsActionDataManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import org.springframework.util.Assert;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 普通测试类
@@ -40,9 +42,82 @@ public class NormalTest {
 
     @Test
     void activeCurrent() {
-        ActiveCurrentData activeCurrentData = apiService.activeCurrent("长安城", 0);
-        Assert.notNull(activeCurrentData,"日常信息-数据 测试失败");
-        String url = apiService.activeCurrentView("长安城", 0,"神奇",1);
-        Assert.isTrue(url !=null && url.startsWith("http"),"日常信息-图片服务 测试失败");
+        BaseResult<ActiveCurrentData> activeCurrentData = apiService.activeCurrent("长安城", 0);
+        Assert.notNull(activeCurrentData, "日常信息-数据 测试失败");
+        BaseResult<String> url = apiService.activeCurrentView("长安城", 0, "神奇", 1);
+        Assert.isTrue(url != null && url.getData() != null && url.getData().startsWith("http"), "日常信息-图片服务 测试失败");
+    }
+
+    @Test
+    void examAnswer() {
+        BaseResult<List<ExamAnswerData>> baseResult = apiService.examAnswer("古琴有几根弦", 10);
+        Assert.notNull(baseResult, "科举试题 测试失败");
+    }
+
+    // @Test
+    // 花价接口报废了，暂时先不测试
+    void hoeFlower() {
+        BaseResult<Map<String, Object>> baseResult = apiService.homeFlower("梦江南", "绣球花", "九寨沟·镜海");
+        Assert.notNull(baseResult, "测试失败");
+        BaseResult<String> baseResult1 = apiService.homeFlowerView("长安城");
+        Assert.isTrue(baseResult1 != null && baseResult1.getData() != null && baseResult1.getData().startsWith("http"), "测试失败");
+    }
+
+    @Test
+    void homeFurniture() {
+        BaseResult<HomeFurnitureData> baseResult = apiService.homeFurniture("龙门香梦");
+        Assert.notNull(baseResult, "测试失败");
+    }
+
+    private void assertDataResult(BaseResult o) {
+        Assert.notNull(o, "测试失败");
+    }
+
+    private void assertViewResult(BaseResult o) {
+        Assert.isTrue(o != null && o.getData() != null && ((String) o.getData()).startsWith("http"), "测试失败");
+    }
+
+    @Test
+    void homeTravel() {
+        BaseResult<List<HomeTravelData>> baseResult = apiService.homeTravel("七秀");
+        assertDataResult(baseResult);
+    }
+
+    @Test
+    void schoolMatrix() {
+        BaseResult<SchoolMatrixData> result = apiService.schoolMatrix("冰心诀");
+        assertDataResult(result);
+    }
+
+    @Test
+    void serverMaster() {
+        BaseResult<ServerMasterData> result = apiService.serverMaster("双梦镇");
+        assertDataResult(result);
+    }
+
+    @Test
+    void serverCheck() {
+        BaseResult<ServerCheckData> result = apiService.serverCheck("长安城");
+        assertDataResult(result);
+    }
+
+    @Test
+    void serverStatus() {
+        BaseResult<ServerStatusData> result = apiService.serverStatus("长安城");
+        assertDataResult(result);
+    }
+
+    @Test
+    void webNewsAllnews() {
+        BaseResult<List<WebNewsAllNewsData>> result = apiService.newsAllNews(2);
+        assertDataResult(result);
+    }
+
+    @Test
+    void newsAnnounce() {
+        BaseResult<List<WebNewsAnnounceData>> result = apiService.newsAnnounce(2);
+        assertDataResult(result);
+        BaseResult<String> result1 = apiService.newsAnnounceView();
+        assertViewResult(result1);
     }
 }

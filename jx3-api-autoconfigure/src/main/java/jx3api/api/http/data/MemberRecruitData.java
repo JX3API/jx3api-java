@@ -26,6 +26,7 @@ public class MemberRecruitData {
     private List<ActivityInfo> data;
 }
 
+@Data
 class ActivityInfo {
     @JsonProperty("activityId")
     private Integer activityId;
