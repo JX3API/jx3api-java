@@ -11,11 +11,8 @@ import lombok.Data;
  */
 @Data
 public class ChatMixedData {
-    @JsonProperty("session")
-    private String session;
-
-    @JsonProperty("submit")
-    private String submit;
+    @JsonProperty("id")
+    private String id;
 
     @JsonProperty("answer")
     private String answer;

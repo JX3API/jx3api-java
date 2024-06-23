@@ -15,9 +15,9 @@ import org.springframework.context.annotation.Configuration;
 @Data
 public class ApiProperties {
     /**
-     * api访问地址, 如果为空，则默认 https://api.jx3api.com
+     * api访问地址, 如果为空，则默认 https://www.jx3api.com
      */
-    private String apiUrl = "https://api.jx3api.com";
+    private String apiUrl = "https://www.jx3api.com";
     /**
      * api访问token，有些api接口，需要校验你的token
      */

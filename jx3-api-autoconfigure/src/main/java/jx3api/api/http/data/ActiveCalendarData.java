@@ -49,6 +49,10 @@ class DataInfo {
     private String week;
     @JsonProperty("war")
     private String war;
+    @JsonProperty("month")
+    private String month;
+    @JsonProperty("year")
+    private String year;
     @JsonProperty("battle")
     private String battle;
     @JsonProperty("orecar")

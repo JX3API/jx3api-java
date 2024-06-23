@@ -38,12 +38,22 @@ class MonsterInfo {
     @JsonProperty("name")
     private String name;
 
-    @JsonProperty("extras")
-    private String extras;
+    @JsonProperty("skill")
+    private String skill;
 
     @JsonProperty("extract")
     private List<String> extract;
 
+    @JsonProperty("data")
+    private OtherData data;
+}
+
+@Data
+class OtherData {
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("list")
+    private List<String> list;
     @JsonProperty("desc")
     private String description;
 }

@@ -1,6 +1,7 @@
 package jx3api.api.http.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jx3api.api.util.TimeUtils;
 import lombok.Data;
 
 import java.util.List;
@@ -20,7 +21,11 @@ public class MemberRecruitData {
     private String server;
 
     @JsonProperty("time")
-    private long time;
+    public String time;
+
+    public void setTime(Long time) {
+        this.time = TimeUtils.timeFormatting(time);
+    }
 
     @JsonProperty("data")
     private List<ActivityInfo> data;
@@ -28,6 +33,8 @@ public class MemberRecruitData {
 
 @Data
 class ActivityInfo {
+    @JsonProperty("crossServer")
+    private Boolean crossServer;
     @JsonProperty("activityId")
     private Integer activityId;
 
@@ -47,7 +54,7 @@ class ActivityInfo {
     private Integer roleId;
 
     @JsonProperty("createTime")
-    private Long createTime;
+    private String createTime;
 
     @JsonProperty("number")
     private Integer number;
@@ -60,4 +67,12 @@ class ActivityInfo {
 
     @JsonProperty("content")
     private String content;
+
+    @JsonProperty("time")
+    public String time;
+
+    public void setCreateTime(Long createTime) {
+        this.createTime = TimeUtils.timeFormatting(createTime);
+    }
+
 }

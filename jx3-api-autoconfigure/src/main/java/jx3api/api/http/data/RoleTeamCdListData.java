@@ -3,17 +3,14 @@ package jx3api.api.http.data;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
- * 角色更新
- *
- * @author Grafie
- * @since 1.0.0
+ * @author grafie
+ * @since 2024/6/23  16:19
  */
 @Data
-public class SaveDetailedData {
-    @JsonProperty("id")
-    private Integer id;
-
+public class RoleTeamCdListData {
     @JsonProperty("zoneName")
     private String zoneName;
 
@@ -62,12 +59,39 @@ public class SaveDetailedData {
     @JsonProperty("personAvatar")
     private String personAvatar;
 
-    @JsonProperty("source")
-    private Integer source;
+    @JsonProperty("data")
+    private List<CdInfo> data;
+}
 
-    @JsonProperty("status")
-    private Integer status;
+@Data
+class CdInfo {
+    @JsonProperty("mapIcon")
+    private String mapIcon;
+    @JsonProperty("mapId")
+    private String mapId;
+    @JsonProperty("mapName")
+    private String mapName;
+    @JsonProperty("mapType")
+    private String mapType;
+    @JsonProperty("bossCount")
+    private Integer bossCount;
+    @JsonProperty("bossFinished")
+    private Integer bossFinished;
+    @JsonProperty("bossProgress")
+    private List<BossProgressInfo> bossProgress;
+}
 
-    @JsonProperty("datetime")
-    private String datetime;
+@Data
+class BossProgressInfo {
+    @JsonProperty("finished")
+    private Boolean finished;
+    @JsonProperty("icon")
+    private String icon;
+    @JsonProperty("index")
+    private String index;
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("progressId")
+    private String progressId;
+
 }

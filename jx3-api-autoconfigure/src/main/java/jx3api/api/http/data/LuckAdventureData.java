@@ -12,6 +12,8 @@ import lombok.Data;
  */
 @Data
 public class LuckAdventureData {
+    @JsonProperty("zone")
+    private String zone;
     @JsonProperty("server")
     private String server;
 

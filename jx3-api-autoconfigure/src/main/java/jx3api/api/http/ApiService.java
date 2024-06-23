@@ -15,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,17 +55,16 @@ public class ApiService {
      * free api
      * */
 
+
     /**
-     * active_current 日常信息
-     * 今天、明天、后天、日常任务。
+     * 活动日历
      * 只有 星期三、星期五、星期六、星期日 才有美人画图，星期三、星期五 才有世界首领，若非活动时间不返回相关键与值。
      *
-     * @param server (str, optional): 区服名称，查找该区服的记录。
-     * @param num    (int, optional): 预测时间，预测指定时间的日常，默认值: ``0`` 为当天，``1`` 为明天，以此类推。
+     * @param num 预测时间，预测指定时间内的日常，默认值 : 15。
      * @return ActiveCalendarData
      */
-    public BaseResult<ActiveCurrentData> activeCurrent(String server, int num) {
-        MethodEnum methodEnum = MethodEnum.DATA_ACTIVE_CURRENT;
+    public BaseResult<ActiveCurrentData> activeCalendar(String server, Integer num) {
+        MethodEnum methodEnum = MethodEnum.DATA_ACTIVE_CALENDAR;
         Map<String, Object> params = new HashMap<>();
         params.put("server", server);
         params.put("num", num);
@@ -75,16 +73,64 @@ public class ApiService {
     }
 
     /**
-     * activeCurrent 的图片服务器
+     * 活动日历 图片服务
+     *
+     * @param scale 网页规模，设置网页分辨率，可选：[1/2]，默认值：1，设置的值越大图片体积也会越大，
+     * @param num   预测时间，预测指定时间内的日常，默认值 : 15，
+     * @param cache 设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭。
+     * @param robot 描述文本，一般设置机器人名称，
+     * @return 图片地址
+     */
+    public BaseResult<String> activeCalendarView(Integer scale, String server, Integer num, Integer cache, String robot) {
+        MethodEnum methodEnum = MethodEnum.VIEW_ACTIVE_CALENDAR;
+        Map<String, Object> params = new HashMap<>();
+        params.put("num", num);
+        params.put("server", server);
+        addViewParam(params, robot, cache, scale);
+        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
+        return getResultRealData(requestResult, methodEnum);
+    }
+
+    /**
+     * @see ApiService#activeCalendarView(Integer, String, Integer, Integer, String)
+     */
+    public BaseResult<String> activeCalendarView(String server, Integer num) {
+        return activeCalendarView(1, server, num, 1, null);
+    }
+
+    /**
+     * @see ApiService#activeCalendarView(Integer, String, Integer, Integer, String)
+     */
+    public BaseResult<String> activeCalendarView(String server) {
+        return activeCalendarView(server, 15);
+    }
+
+    /**
+     * 活动月历
+     *
+     * @param num 预测时间，预测指定时间内的日常，默认值 : 15。
+     * @return ActiveCalendarData
+     */
+    public BaseResult<ActiveCalendarData> activeListCalendar(String server, Integer num) {
+        MethodEnum methodEnum = MethodEnum.DATA_ACTIVE_LIST_CALENDAR;
+        Map<String, Object> params = new HashMap<>();
+        params.put("num", num);
+        params.put("server", server);
+        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
+        return getResultRealData(requestResult, methodEnum);
+    }
+
+    /**
+     * activeListCalendar 的图片服务器
      *
      * @param server 区服名称，查找该区服的记录。
-     * @param num    预测时间，预测指定时间的日常，默认值: ``0`` 为当天，``1`` 为明天，以此类推。
+     * @param num    预测时间，预测指定时间的日常，最少为7
      * @param robot  描述文本，一般设置机器人名称，
      * @param cache  设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭。
      * @return 图片地址
      */
-    public BaseResult<String> activeCurrentView(String server, int num, String robot, Integer cache) {
-        MethodEnum methodEnum = MethodEnum.VIEW_ACTIVE_CURRENT;
+    public BaseResult<String> activeListCalendarView(String server, int num, String robot, Integer cache) {
+        MethodEnum methodEnum = MethodEnum.VIEW_ACTIVE_LIST_CALENDAR;
         Map<String, Object> params = new HashMap<>();
         params.put("server", server);
         params.put("num", num);
@@ -94,10 +140,23 @@ public class ApiService {
     }
 
     /**
-     * @see ApiService#activeCurrentView(String, int, String, Integer)
+     * @see ApiService#activeListCalendarView(String, int, String, Integer)
      */
-    public BaseResult<String> activeCurrentView(String server, int num) {
-        return activeCurrentView(server, num, null, null);
+    public BaseResult<String> activeListCalendarView(String server, int num) {
+        return activeListCalendarView(server, num, null, null);
+    }
+
+    /**
+     * 行侠事件
+     *
+     * @return ActiveCelebritiesData List
+     */
+    public BaseResult<List<ActiveCelebritiesData>> activeCelebrities(Integer season) {
+        MethodEnum methodEnum = MethodEnum.DATA_ACTIVE_CELEBRITIES;
+        Map<String, Object> params = new HashMap<>();
+        params.put("season", season);
+        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
+        return getResultRealData(requestResult, methodEnum);
     }
 
     /**
@@ -315,55 +374,23 @@ public class ApiService {
         return getResultRealData(requestResult, methodEnum);
     }
 
+    /**
+     * 小药清单
+     *
+     * @param name 区服别名，查找目标简称的服务器组。
+     * @return ServerMasterData
+     */
+    public BaseResult<List<SchoolToxicData>> schoolToxic(String name) {
+        MethodEnum methodEnum = MethodEnum.DATA_SCHOOL_TOXIC;
+        Map<String, Object> params = new HashMap<>();
+        params.put("name", name);
+        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
+        return getResultRealData(requestResult, methodEnum);
+    }
     /*
      * VIP I API
      */
 
-    /**
-     * 活动日历
-     *
-     * @param num 预测时间，预测指定时间内的日常，默认值 : 15。
-     * @return ActiveCalendarData
-     */
-    public BaseResult<ActiveCalendarData> activeCalendar(Integer num) {
-        MethodEnum methodEnum = MethodEnum.DATA_ACTIVE_CALENDAR;
-        Map<String, Object> params = new HashMap<>();
-        params.put("num", num);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * 活动日历 图片服务
-     *
-     * @param scale 网页规模，设置网页分辨率，可选：[1/2]，默认值：1，设置的值越大图片体积也会越大，
-     * @param num   预测时间，预测指定时间内的日常，默认值 : 15，
-     * @param cache 设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭。
-     * @param robot 描述文本，一般设置机器人名称，
-     * @return 图片地址
-     */
-    public BaseResult<String> activeCalendarView(Integer scale, Integer num, Integer cache, String robot) {
-        MethodEnum methodEnum = MethodEnum.VIEW_ACTIVE_CALENDAR;
-        Map<String, Object> params = new HashMap<>();
-        params.put("num", num);
-        addViewParam(params, robot, cache, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * @see ApiService#activeCalendarView(Integer, Integer, Integer, String)
-     */
-    public BaseResult<String> activeCalendarView(Integer num) {
-        return activeCalendarView(1, num, 1, null);
-    }
-
-    /**
-     * @see ApiService#activeCalendarView(Integer, Integer, Integer, String)
-     */
-    public BaseResult<String> activeCalendarView() {
-        return activeCalendarView(15);
-    }
 
     /**
      * 金币比例
@@ -425,17 +452,6 @@ public class ApiService {
         return getResultRealData(requestResult, methodEnum);
     }
 
-    /**
-     * 行侠事件
-     *
-     * @return ActiveCelebritiesData List
-     */
-    public BaseResult<List<ActiveCelebritiesData>> activeCelebrities() {
-        MethodEnum methodEnum = MethodEnum.DATA_ACTIVE_CELEBRITIES;
-        Map<String, Object> params = new HashMap<>();
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-    }
 
     /**
      * 奇遇记录
@@ -443,16 +459,14 @@ public class ApiService {
      * @param server 区服名称，查找目标区服的数据，
      * @param name   角色名称，筛选角色记录，
      * @param ticket 推栏标识，检查并补充奇遇的完整性，
-     * @param filter 是否过滤，过滤无效的奇遇，需要提供有效的ticket，默认值 : 1为开启，0为关闭，
      * @return LuckAdventureData
      */
-    public BaseResult<List<LuckAdventureData>> luckAdventure(String server, String name, String ticket, Integer filter) {
+    public BaseResult<List<LuckAdventureData>> luckAdventure(String server, String name, String ticket) {
         MethodEnum methodEnum = MethodEnum.DATA_LUCK_ADVENTURE;
         Map<String, Object> params = new HashMap<>();
         params.put("server", server);
         params.put("name", name);
         params.put("ticket", ticket);
-        params.put("filter", filter);
         RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
         return getResultRealData(requestResult, methodEnum);
     }
@@ -762,13 +776,15 @@ public class ApiService {
      *
      * @param server  区服名称，查找目标区服的招募信息，
      * @param keyword 关键字，模糊匹配记录，用=关键字完全匹配记录，
+     * @param table   指定表记录，1=本服+跨服，2=本服，3=跨服，默认值：1；
      * @return MemberRecruitData
      */
-    public BaseResult<MemberRecruitData> memberRecruit(String server, String keyword) {
+    public BaseResult<MemberRecruitData> memberRecruit(String server, String keyword, Integer table) {
         MethodEnum methodEnum = MethodEnum.DATA_MEMBER_RECRUIT;
         Map<String, Object> params = new HashMap<>();
         params.put("server", server);
         params.put("keyword", keyword);
+        params.put("table", table);
         RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
         return getResultRealData(requestResult, methodEnum);
     }
@@ -783,21 +799,22 @@ public class ApiService {
      * @param cache   设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭。
      * @return 图片地址
      */
-    public BaseResult<String> memberRecruitView(Integer scale, String server, String keyword, String robot, Integer cache) {
+    public BaseResult<String> memberRecruitView(Integer scale, String server, String keyword, String robot, Integer cache, Integer table) {
         MethodEnum methodEnum = MethodEnum.VIEW_MEMBER_RECRUIT;
         Map<String, Object> params = new HashMap<>();
         params.put("server", server);
         params.put("keyword", keyword);
+        params.put("table", table);
         addViewParam(params, robot, cache, scale);
         RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
         return getResultRealData(requestResult, methodEnum);
     }
 
     /**
-     * @see ApiService#memberRecruitView(Integer, String, String, String, Integer)
+     * @see ApiService#memberRecruitView(Integer, String, String, String, Integer, Integer)
      */
-    public BaseResult<String> memberRecruitView(String server, String keyword) {
-        return memberRecruitView(1, server, keyword, null, 1);
+    public BaseResult<String> memberRecruitView(String server, String keyword, Integer table) {
+        return memberRecruitView(1, server, keyword, null, 1, table);
     }
 
     /**
@@ -984,6 +1001,53 @@ public class ApiService {
      */
     public BaseResult<String> roleAttributeView(String server, String name, String ticket) {
         return roleAttributeView(1, server, name, null, 1, ticket);
+    }
+
+    /**
+     * 副本记录
+     *
+     * @param server 区服名称，查找目标区服的角色属性记录，
+     * @param name   角色名称，筛选记录
+     * @param ticket 推栏标识，检查请求权限，
+     * @return RoleAttributeData
+     */
+    public BaseResult<RoleTeamCdListData> roleTeamCdList(String server, String name, String ticket) {
+        MethodEnum methodEnum = MethodEnum.DATA_ROLE_CDLIST;
+        Map<String, Object> params = new HashMap<>();
+        params.put("server", server);
+        params.put("name", name);
+        params.put("ticket", ticket);
+        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
+        return getResultRealData(requestResult, methodEnum);
+    }
+
+    /**
+     * 副本记录 图片服务
+     *
+     * @param scale  网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大，
+     * @param server 区服名称，查找目标区服的角色属性记录，
+     * @param name   角色名称，筛选记录，
+     * @param robot  描述文本，一般设置机器人名称
+     * @param cache  设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭
+     * @param ticket 推栏标识，检查请求权限
+     * @return 图片地址
+     */
+    public BaseResult<String> roleTeamCdListView(Integer scale, String server, String name, String robot, Integer cache, String ticket) {
+        MethodEnum methodEnum = MethodEnum.VIEW_ROLE_CDLIST;
+        Map<String, Object> params = new HashMap<>();
+        params.put("server", server);
+        params.put("name", name);
+        params.put("ticket", ticket);
+        addViewParam(params, robot, cache, scale);
+        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
+        return getResultRealData(requestResult, methodEnum);
+    }
+
+    /**
+     * @see ApiService#roleTeamCdListView(Integer, String, String, String, Integer, String)
+     */
+    public BaseResult<String> roleTeamCdListView(String server, String name, String ticket) {
+        return roleTeamCdListView(1, server, name, null, null, ticket);
     }
 
     /**
@@ -1211,6 +1275,7 @@ public class ApiService {
     /**
      * 物品价格
      * [sales] : [1 = 出售，2 = 收购，3 = 想出，4 = 想收，5 = 成交，6 = 正出，7 = 公示]
+     * [data]结构共计7层, [0 = 电信点卡， 1 = 电信月卡，2 = 双线点卡，3 = 双线月卡，4 = 青梅煮酒 5 = 万宝楼·正售， 6 = 万宝楼·公示]
      *
      * @param name 外观名称，查找目标外观的价格信息
      * @return TradeRecordData
@@ -1248,6 +1313,7 @@ public class ApiService {
     public BaseResult<String> tradeRecordView(String name) {
         return tradeRecordView(1, name, null, 1);
     }
+// TODO: 2024/6/23 贴吧记录，后面加
 
     /**
      * 挂件详情
@@ -1270,10 +1336,12 @@ public class ApiService {
      * @param name 外观名称，查找目标外观物价信息。
      * @return TiebaItemRecordsData List
      */
-    public BaseResult<List<TiebaItemRecordsData>> tiebaItemRecords(String name) {
+    public BaseResult<List<TiebaItemRecordsData>> tiebaItemRecords(String name,String server,Integer limit) {
         MethodEnum methodEnum = MethodEnum.DATA_TIEBA_ITEM_RECORDS;
         Map<String, Object> params = new HashMap<>();
         params.put("name", name);
+        params.put("server", server);
+        params.put("limit", limit);
         RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
         return getResultRealData(requestResult, methodEnum);
 
@@ -1638,7 +1706,7 @@ public class ApiService {
         Map<String, Object> params = new HashMap<>();
         params.put("server", server);
         params.put("name", name);
-        params.put("name", limit);
+        params.put("limit", limit);
         RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
         return getResultRealData(requestResult, methodEnum);
     }
@@ -1741,6 +1809,21 @@ public class ApiService {
      */
     public BaseResult<List<HorseRecordsData>> horseRecords(String server) {
         MethodEnum methodEnum = MethodEnum.DATA_HORSE_RECORDS;
+        Map<String, Object> params = new HashMap<>();
+        params.put("server", server);
+        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
+        return getResultRealData(requestResult, methodEnum);
+
+    }
+
+    /**
+     * 马场事件
+     *
+     * @param server 区服名称，查找目标区服的记录
+     * @return HorseRecordsData List
+     */
+    public BaseResult<HorseEventData> horseEvent(String server) {
+        MethodEnum methodEnum = MethodEnum.DATA_HORSE_EVENT;
         Map<String, Object> params = new HashMap<>();
         params.put("server", server);
         RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
@@ -1868,6 +1951,36 @@ public class ApiService {
     }
 
     /**
+     * 酷狗音乐
+     *
+     * @param name 歌曲名称，查找酷狗音乐的音乐编号。
+     * @return MusicNeteaseData List
+     */
+    public BaseResult<List<MusicKugouData>> musicKugou(String name) {
+        MethodEnum methodEnum = MethodEnum.DATA_MUSIC_KUGOU;
+        Map<String, Object> params = new HashMap<>();
+        params.put("name", name);
+        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
+        return getResultRealData(requestResult, methodEnum);
+
+    }
+
+    /**
+     * 骗子记录
+     *
+     * @param uin 用户QQ号，查找是否存在行骗记录；
+     * @return MusicNeteaseData List
+     */
+    public BaseResult<List<FraudDetailData>> fraudDetail(Long uin) {
+        MethodEnum methodEnum = MethodEnum.DATA_FRAUD_DETAIL;
+        Map<String, Object> params = new HashMap<>();
+        params.put("uin", uin);
+        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
+        return getResultRealData(requestResult, methodEnum);
+
+    }
+
+    /**
      * 执行get请求
      *
      * @param path   请求地址
@@ -1894,7 +2007,7 @@ public class ApiService {
      * @param methodEnum    请求枚举
      * @return 序列化后的返回值，根据 MethodEnum.resultBeanClass 进行序列化
      */
-    public static <T> BaseResult<T> getResultRealData(RequestResult requestResult, MethodEnum methodEnum)  {
+    public static <T> BaseResult<T> getResultRealData(RequestResult requestResult, MethodEnum methodEnum) {
         if (requestResult == null) {
             logger.error("返回值不为空，请求名称=>{},请求地址=>{},返回值信息=>{}", methodEnum.getMethodName(), methodEnum.getMethodPath(), requestResult);
             BaseResult baseResult = new BaseResult();
@@ -1917,10 +2030,15 @@ public class ApiService {
             TypeFactory typeFactory = OBJECT_MAPPER.getTypeFactory();
             CollectionType listType = typeFactory.constructCollectionType(List.class, methodEnum.getResultBeanClass());
             try {
-                List<T> result = OBJECT_MAPPER.readValue(OBJECT_MAPPER.writeValueAsString(requestResult.getData()),  listType);
+                List<T> result = null;
+                if (methodEnum.getJsonKey() == null) {
+                    result = OBJECT_MAPPER.readValue(OBJECT_MAPPER.writeValueAsString(requestResult.getData()), listType);
+                } else {
+                    result = OBJECT_MAPPER.readValue(((Map<String, String>) requestResult.getData()).get(methodEnum.getJsonKey()), listType);
+                }
                 baseResult.setData(result);
-            }catch (JsonProcessingException e){
-                logger.error("序列化参数时，出现异常，请求参数=>{}",requestResult.getData(),e);
+            } catch (JsonProcessingException e) {
+                logger.error("序列化参数时，出现异常，请求参数=>{}", requestResult.getData(), e);
                 // 不想给调用方加thr了，换个runtime抛出去把
                 throw new RuntimeException("序列化参数时，出现异常");
             }

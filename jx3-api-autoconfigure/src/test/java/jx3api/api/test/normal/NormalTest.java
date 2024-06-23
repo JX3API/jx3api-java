@@ -30,22 +30,37 @@ public class NormalTest {
         WsActionDataManager.getWsDataByAction(1001);
     }
 
+    private String ticket = "";
     private ApiService apiService;
 
     @BeforeEach
     void initApiProperties() {
         ApiProperties apiProperties = new ApiProperties();
         apiProperties.setApiToken("123");
-        apiProperties.setApiUrl("https://api.jx3api.com/");
+        apiProperties.setApiUrl("https://www.jx3api.com");
         apiService = new ApiService(apiProperties);
     }
 
     @Test
-    void activeCurrent() {
-        BaseResult<ActiveCurrentData> activeCurrentData = apiService.activeCurrent("长安城", 0);
+    void activeCalendar() {
+        BaseResult<ActiveCurrentData> activeCurrentData = apiService.activeCalendar("长安城", 0);
         Assert.notNull(activeCurrentData, "日常信息-数据 测试失败");
-        BaseResult<String> url = apiService.activeCurrentView("长安城", 0, "神奇", 1);
+        BaseResult<String> url = apiService.activeCalendarView("长安城", 7);
         Assert.isTrue(url != null && url.getData() != null && url.getData().startsWith("http"), "日常信息-图片服务 测试失败");
+    }
+
+    @Test
+    void activeListCalendar() {
+        BaseResult<ActiveCalendarData> activeCurrentData = apiService.activeListCalendar("长安城", 7);
+        Assert.notNull(activeCurrentData, "日常信息-数据 测试失败");
+        BaseResult<String> url = apiService.activeListCalendarView("长安城", 7);
+        Assert.isTrue(url != null && url.getData() != null && url.getData().startsWith("http"), "日常信息-图片服务 测试失败");
+    }
+
+    @Test
+    void activeCelebrities() {
+        BaseResult<List<ActiveCelebritiesData>> result = apiService.activeCelebrities(3);
+        assertDataResult(result);
     }
 
     @Test
@@ -119,5 +134,32 @@ public class NormalTest {
         assertDataResult(result);
         BaseResult<String> result1 = apiService.newsAnnounceView();
         assertViewResult(result1);
+    }
+
+    @Test
+    void schoolToxic() {
+        BaseResult<List<SchoolToxicData>> result = apiService.schoolToxic("冰心诀");
+        assertDataResult(result);
+    }
+
+    @Test
+    void roleTeamCdList() {
+        // TODO: 2024/6/23 待测试 如果没有view就删除
+        BaseResult<RoleTeamCdListData> result = apiService.roleTeamCdList("唯我独尊", "夜温言@长安城", ticket);
+        assertDataResult(result);
+        BaseResult<String> result1 = apiService.roleTeamCdListView("唯我独尊", "夜温言@长安城", ticket);
+        assertViewResult(result1);
+    }
+
+    @Test
+    void fraudDetail(){
+        BaseResult<List<FraudDetailData>>  result =  apiService.fraudDetail(123465L);
+        assertDataResult(result);
+    }
+
+    @Test
+    void tiebaItemRecord(){
+        BaseResult<List<TiebaItemRecordsData>>  result = apiService.tiebaItemRecords("狐金","长安城",1);
+        assertDataResult(result);
     }
 }

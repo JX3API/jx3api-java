@@ -26,6 +26,8 @@ public class TiebaItemRecordsData {
 
     @JsonProperty("url")
     private Long url;
+    @JsonProperty("reply")
+    private Long reply;
 
     @JsonProperty("context")
     private String context;

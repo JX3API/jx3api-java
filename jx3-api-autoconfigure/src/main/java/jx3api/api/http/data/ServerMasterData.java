@@ -31,6 +31,8 @@ public class ServerMasterData {
 
     @JsonProperty("center")
     private String center;
+    @JsonProperty("column")
+    private String column;
 
     @JsonProperty("duowan")
     private Map<String, List<Integer>> duowan;

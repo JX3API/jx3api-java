@@ -20,14 +20,18 @@ public enum MethodEnum {
     /**
      * FREE API
      */
-    DATA_ACTIVE_CURRENT("日常信息-数据", "/data/active/current", ActiveCurrentData.class, null, Object.class),
-    VIEW_ACTIVE_CURRENT("日常信息-图片服务", "/view/active/current", String.class, "url", Object.class),
+    DATA_ACTIVE_CALENDAR("活动日历-数据", "/data/active/calendar", ActiveCurrentData.class, null, Object.class),
+    VIEW_ACTIVE_CALENDAR("活动日历-图片服务", "/view/active/calendar", String.class, "url", Object.class),
+    DATA_ACTIVE_LIST_CALENDAR("活动日历-数据", "/data/active/list/calendar", ActiveCalendarData.class, null, Object.class),
+    VIEW_ACTIVE_LIST_CALENDAR("活动日历-图片服务", "/view/active/list/calendar", String.class, "url", Object.class),
     DATA_HOME_FLOWER("鲜花价格-数据", "/data/home/flower", Map.class, null, Object.class),
     VIEW_HOME_FLOWER("鲜花价格-图片服务", "/view/home/flower", String.class, "url", Object.class),
     DATA_WEB_NEWS_ANNOUNCE("维护公告-数据", "/data/web/news/announce", WebNewsAllNewsData.class, null, List.class),
     VIEW_WEB_NEWS_ANNOUNCE("维护公告-图片服务", "/view/web/news/announce", String.class, "url", Object.class),
     /*纯数据接口*/
     DATA_EXAM_ANSWER("科举试题-数据", "/data/exam/answer", ExamAnswerData.class, null, List.class),
+    DATA_SCHOOL_TOXIC("小药清单-数据", "/data/school/toxic", SchoolToxicData.class, null, List.class),
+    VIEW_SCHOOL_TOXIC("小药清单-图片服务", "/view/school/toxic", SchoolToxicData.class, null, List.class),
     DATA_HOME_FURNITURE("家园装饰-数据", "/data/home/furniture", HomeFurnitureData.class, null, Object.class),
     DATA_HOME_TRAVEL("器物图谱-数据", "/data/home/travel", HomeTravelData.class, null, List.class),
     DATA_SCHOOL_MATRIX("阵法效果-数据", "/data/school/matrix", SchoolMatrixData.class, null, Object.class),
@@ -39,12 +43,11 @@ public enum MethodEnum {
     /**
      * VIP1 API
      */
-    DATA_ACTIVE_CALENDAR("活动日历-数据", "/data/active/calendar", ActiveCalendarData.class, null, Object.class),
-    VIEW_ACTIVE_CALENDAR("活动日历-图片服务", "/view/active/calendar", String.class, "url", Object.class),
     DATA_TRADE_DEMON("金币比例-数据", "/data/trade/demon", TradeDemonData.class, null, List.class),
     VIEW_TRADE_DEMON("金币比例-图片服务", "/view/trade/demon", String.class, "url", Object.class),
     VIEW_TRADE_SERVER_DEMON("金币比例-图片服务", "/view/trade/server/demon", String.class, "url", Object.class),
-    DATA_ACTIVE_CELEBRITIES("行侠事件-数据", "/data/active/celebrities", ActiveCelebritiesData.class, null, List.class),
+    DATA_ACTIVE_CELEBRITIES("行侠事件-数据", "/data/active/celebrity", ActiveCelebritiesData.class, null, List.class),
+    VIEW_ACTIVE_CELEBRITIES("行侠事件-图片服务", "/view/active/celebrity", String.class, "url", Object.class),
     DATA_LUCK_ADVENTURE("奇遇记录-数据", "/data/luck/adventure", LuckAdventureData.class, null, List.class),
     VIEW_LUCK_ADVENTURE("奇遇记录-图片服务", "/view/luck/adventure", String.class, "url", Object.class),
     DATA_LUCK_STATISTICAL("奇遇统计-数据", "/data/luck/statistical", LuckStatisticalData.class, null, List.class),
@@ -67,6 +70,8 @@ public enum MethodEnum {
     VIEW_ROLE_ACHIEVEMENT("成就百科-图片服务", "/view/role/achievement", String.class, "url", Object.class),
     DATA_ROLE_ATTRIBUTE("装备属性-数据", "/data/role/attribute", RoleAttributeData.class, null, Object.class),
     VIEW_ROLE_ATTRIBUTE("装备属性-图片服务", "/view/role/attribute", String.class, "url", Object.class),
+    DATA_ROLE_CDLIST("副本记录-数据", "/data/role/teamCdList", RoleTeamCdListData.class, null, Object.class),
+    VIEW_ROLE_CDLIST("副本记录-图片服务", "/view/role/teamCdList", String.class, "url", Object.class),
     DATA_SCHOOL_SENIORITY("资历榜单-数据", "/data/school/seniority", SchoolSeniorityData.class, null, List.class),
     VIEW_SCHOOL_SENIORITY("资历榜单-图片服务", "/view/school/seniority", String.class, "url", Object.class),
     DATA_SCHOOL_FORCE("奇穴效果-数据", "/data/school/force", SchoolForceData.class, null, List.class),
@@ -113,7 +118,8 @@ public enum MethodEnum {
     DATA_MEMBER_TEACHER("师父列表-数据", "/data/member/teacher", MemberTeacherData.class, null, Object.class),
     DATA_MEMBER_STUDENT("徒弟列表-数据", "/data/member/student", DuowanStatisticalData.class, null, Object.class),
     DATA_WATCH_RANK_STATISTICAL("烟花排行-数据", "/data/watch/rank/statistical", WatchRankStatisticalData.class, null, List.class),
-    DATA_HORSE_RECORDS("的卢统计-数据", "/data/horse/records", HorseRecordsData.class, "data", List.class),
+    DATA_HORSE_RECORDS("的卢统计-数据", "/data/horse/records", HorseRecordsData.class, null, List.class),
+    DATA_HORSE_EVENT("马场事件-数据", "/data/horse/event", HorseEventData.class, null, Object.class),
 
     /**
      * VRF API
@@ -123,7 +129,9 @@ public enum MethodEnum {
     DATA_SAOHUA_CONTENT("舔狗日记-数据", "/data/saohua/content", SaohuaContentData.class, null, Object.class),
     DATA_SOUND_CONVERTER("语音合成-数据", "/data/sound/converter", SoundConverterData.class, null, Object.class),
     DATA_MUSIC_TENCENT("腾讯音乐-数据", "/data/music/tencent", MusicTencentData.class, null, List.class),
-    DATA_MUSIC_NETEASE("网易音乐-数据", "/data/music/netease", MusicNeteaseData.class, null, List.class);
+    DATA_MUSIC_NETEASE("网易音乐-数据", "/data/music/netease", MusicNeteaseData.class, null, List.class),
+    DATA_MUSIC_KUGOU("酷狗音乐-数据", "/data/music/kugou", MusicKugouData.class, null, List.class),
+    DATA_FRAUD_DETAIL("骗子记录-数据", "/data/fraud/detail", FraudDetailData.class, "records", List.class);
     /**
      * 请求名称
      */
@@ -184,9 +192,9 @@ public enum MethodEnum {
                 pickedTimeMap.put(methodEnum.getMethodPath(), methodEnum.getMethodPath());
             }
         }
-        if (!needCheckedList.isEmpty()){
+        if (!needCheckedList.isEmpty()) {
             System.out.println("------------------------存在重复数据，请检查------------------------");
-            System.out.println(String.join(",",needCheckedList));
+            System.out.println(String.join(",", needCheckedList));
             System.out.println("------------------------存在重复数据，请检查------------------------");
         }
     }

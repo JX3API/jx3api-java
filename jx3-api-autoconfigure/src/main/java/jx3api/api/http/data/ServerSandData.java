@@ -23,15 +23,16 @@ public class ServerSandData {
     @JsonProperty("reset")
     private Integer reset;
 
-    @JsonProperty("time")
-    private String time;
+    @JsonProperty("update")
+    private String update;
 
     @JsonProperty("data")
     private List<CastleInfo> data;
 
-    public void setTime(long time) {
-        this.time = TimeUtils.timeFormatting(time);
+    public void setUpdate(Long update) {
+        this.update =TimeUtils.timeFormatting(update);
     }
+
 }
 
 @Data
