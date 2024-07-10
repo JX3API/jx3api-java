@@ -117,8 +117,87 @@ class EquipItem {
 
     @JsonProperty("permanentEnchant")
     private List<EnchantItem> permanentEnchant;
-}
 
+    @JsonProperty("fiveStone")
+    private List<FiveStone> fiveStone;
+
+    @JsonProperty("Base1Type")
+    private Base1Type base1Type;
+    @JsonProperty("Base2Type")
+    private Base2Type base2Type;
+    @JsonProperty("EquipType")
+    private EquipType equipType;
+    @JsonProperty("ID")
+    private Long id;
+    @JsonProperty("UID")
+    private Long uid;
+    @JsonProperty("colorStone")
+    private ColorStone colorStone;
+    @JsonProperty("commonEnchant")
+    private EquipCommonEnchant commonEnchant;
+}
+@Data
+class EquipCommonEnchant{
+    @JsonProperty("id")
+    private String id;
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("icon")
+    private String icon;
+    @JsonProperty("desc")
+    private String desc;
+}
+@Data
+class ColorStone{
+    @JsonProperty("id")
+    private Long id;
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("class")
+    private String classType;
+    @JsonProperty("level")
+    private Integer level;
+    @JsonProperty("icon")
+    private String icon;
+    @JsonProperty("kind")
+    private String kind;
+    @JsonProperty("subKind")
+    private String subKind;
+    @JsonProperty("attribute")
+    private List<ColorStoneAttribute> attribute;
+}
+@Data
+class ColorStoneAttribute{
+    @JsonProperty("max")
+    private Integer max;
+    @JsonProperty("min")
+    private Integer min;
+    @JsonProperty("desc")
+    private String desc;
+    @JsonProperty("percent")
+    private Boolean percent;
+}
+@Data
+class FiveStone{
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("level")
+    private String level;
+    @JsonProperty("max")
+    private String max;
+    @JsonProperty("min")
+    private String min;
+    @JsonProperty("icon")
+    private String icon;
+    @JsonProperty("kind")
+    private String kind;
+    @JsonProperty("subKind")
+    private String subKind;
+    @JsonProperty("desc")
+    private String desc;
+    @JsonProperty("percent")
+    private String percent;
+}
 @Data
 class ModifyType {
     @JsonProperty("name")
@@ -213,4 +292,52 @@ class PanelItem {
 
     @JsonProperty("value")
     private Integer value;
+}
+
+@Data
+class Base1Type{
+    @JsonProperty("Attrib")
+    private Attrib attrib;
+    @JsonProperty("Desc")
+    private String desc;
+    @JsonProperty("Base1Max")
+    private String base1Max;
+    @JsonProperty("Base1Min")
+    private String base1Min;
+
+}
+@Data
+class Base2Type{
+    @JsonProperty("Attrib")
+    private Attrib attrib;
+    @JsonProperty("Desc")
+    private String desc;
+    @JsonProperty("Base2Max")
+    private String base2Max;
+    @JsonProperty("Base2Min")
+    private String base2Min;
+}
+@Data
+class Attrib{
+    @JsonProperty("GeneratedBase")
+    private String generatedBase;
+    @JsonProperty("GeneratedMagic")
+    private String generatedMagic;
+    @JsonProperty("HorseBase")
+    private String horseBase;
+    @JsonProperty("HorseMagic")
+    private String horseMagic;
+    @JsonProperty("percent")
+    private Boolean percent;
+    @JsonProperty("Type")
+    private String type;
+}
+@Data
+class  EquipType{
+    @JsonProperty("Desc")
+    private String desc;
+    @JsonProperty("EquipUsage")
+    private Integer equipUsage;
+    @JsonProperty("Icon")
+    private String icon;
 }
