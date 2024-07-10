@@ -31,7 +31,7 @@ public class ActiveCurrentData {
     private String orecar;
 
     @JsonProperty("leader")
-    private String leader;
+    private List<String> leader;
 
     @JsonProperty("school")
     private String school;
