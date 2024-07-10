@@ -144,7 +144,6 @@ public class NormalTest {
 
     @Test
     void roleTeamCdList() {
-        // TODO: 2024/6/23 待测试 如果没有view就删除
         BaseResult<RoleTeamCdListData> result = apiService.roleTeamCdList("唯我独尊", "夜温言@长安城", ticket);
         assertDataResult(result);
         BaseResult<String> result1 = apiService.roleTeamCdListView("唯我独尊", "夜温言@长安城", ticket);
@@ -160,6 +159,25 @@ public class NormalTest {
     @Test
     void tiebaItemRecord(){
         BaseResult<List<TiebaItemRecordsData>>  result = apiService.tiebaItemRecords("狐金","长安城",1);
+        assertDataResult(result);
+    }
+
+    @Test
+    void roleAttribute(){
+        BaseResult<RoleAttributeData> roleAttributeDataBaseResult = apiService.roleAttribute("唯我独尊", "夜温言@长安城",ticket);
+        assertDataResult(roleAttributeDataBaseResult);
+    }
+
+    @Test
+    void activeMonster(){
+        BaseResult<ActiveMonsterData> baseResult =  apiService.activeMonster();
+        assertDataResult(baseResult);
+        BaseResult<String> baseResult1= apiService.activeMonsterView();
+        assertViewResult(baseResult1);
+    }
+    @Test
+    void horseRecords(){
+        BaseResult<List<HorseRecordsData>>  result = apiService.horseRecords("乾坤一掷");
         assertDataResult(result);
     }
 }
