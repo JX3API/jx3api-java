@@ -2,6 +2,7 @@ package jx3api.api.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 @Configuration
 @ConfigurationProperties(prefix = "jx3api.ws")
 @Data
+@Conditional(OnEnableJX3ApiWSCondition.class)
 public class WebSocketProperties {
     /**
      * wsToken，ws有些接口需要校验你的token

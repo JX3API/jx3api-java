@@ -2,6 +2,7 @@ package jx3api.api.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "jx3api.api")
 @Data
+@Conditional(OnEnableJX3ApiHttpCondition.class)
 public class ApiProperties {
     /**
      * api访问地址, 如果为空，则默认 https://www.jx3api.com

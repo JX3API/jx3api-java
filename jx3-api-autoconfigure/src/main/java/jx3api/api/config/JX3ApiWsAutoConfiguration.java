@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 
 import java.lang.reflect.InvocationTargetException;
@@ -21,8 +22,8 @@ import java.util.List;
  * @author Grafie
  * @since 1.0.0
  */
-@ConditionalOnClass(value = EnableJX3ApiWS.class)
 @Configuration
+@Conditional(OnEnableJX3ApiWSCondition.class)
 public class JX3ApiWsAutoConfiguration {
     /**
      * 默认ws data的包路径
@@ -48,6 +49,7 @@ public class JX3ApiWsAutoConfiguration {
             webSocketProperties.setWsDataBeanBasePackage(wsDataBasePackageList);
         }
         webSocketProperties.getWsDataBeanBasePackage().add(DEFAULT_WS_DATA_PACKAGE);
+        logger.info("欢迎使用JX3 API Java sdk websocket");
         return new WebSocketClientInitializer(webSocketProperties, iWsDataPushService);
     }
 
