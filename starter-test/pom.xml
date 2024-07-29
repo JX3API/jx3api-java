@@ -42,7 +42,7 @@
         </dependency>
         <dependency>
             <groupId>org.jx3api</groupId>
-            <artifactId>jx3-api-starter</artifactId>
+            <artifactId>jx3-api-autoconfigure</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

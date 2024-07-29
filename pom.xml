@@ -16,7 +16,6 @@
 
     <!-- 内部模块 -->
     <modules>
-        <module>jx3-api-starter</module>
         <module>jx3-api-autoconfigure</module>
         <module>starter-test</module>
     </modules>

@@ -8,20 +8,24 @@ import jx3api.api.ws.IWsDataPushService;
 import jx3api.api.ws.WebSocketClientInitializer;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
+/**
+ * 需要修改 {@link StarterTestApplication}类中的@Enablexx注解，否则spring注入会存在问题
+ */
 @SpringBootTest
-@EnableJX3Api
 @TestPropertySource(locations = "classpath:test.properties")
 class StarterTestApplicationTests {
-    @Resource
+    @Autowired
     private WebSocketClientInitializer webSocketClientInitializer;
     @Resource
     private IWsDataPushService iWsDataPushService;
-    @Resource
+    @Autowired
     private ApiService apiService;
 
     @Test
