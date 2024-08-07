@@ -39,17 +39,6 @@ public class ApiService {
         this.webClient = WebClient.builder().baseUrl(apiProperties.getApiUrl()).defaultHeader("token", apiProperties.getApiToken()).defaultHeader(HttpHeaders.USER_AGENT, "Nonebot2-jx3-bot").build();
     }
 
-    private void addViewParam(Map<String, Object> params, String robot, Integer cache, Integer scale) {
-        if (cache == null) {
-            params.put("cache", 1);
-        }
-        if (scale == null) {
-            params.put("scale", 1);
-        }
-        if (!(robot == null || robot.isBlank())) {
-            params.put("robot", robot);
-        }
-    }
 
     /*
      * free api
@@ -73,39 +62,6 @@ public class ApiService {
     }
 
     /**
-     * 活动日历 图片服务
-     *
-     * @param scale 网页规模，设置网页分辨率，可选：[1/2]，默认值：1，设置的值越大图片体积也会越大，
-     * @param num   预测时间，预测指定时间内的日常，默认值 : 15，
-     * @param cache 设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭。
-     * @param robot 描述文本，一般设置机器人名称，
-     * @return 图片地址
-     */
-    public BaseResult<String> activeCalendarView(Integer scale, String server, Integer num, Integer cache, String robot) {
-        MethodEnum methodEnum = MethodEnum.VIEW_ACTIVE_CALENDAR;
-        Map<String, Object> params = new HashMap<>();
-        params.put("num", num);
-        params.put("server", server);
-        addViewParam(params, robot, cache, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * @see ApiService#activeCalendarView(Integer, String, Integer, Integer, String)
-     */
-    public BaseResult<String> activeCalendarView(String server, Integer num) {
-        return activeCalendarView(1, server, num, 1, null);
-    }
-
-    /**
-     * @see ApiService#activeCalendarView(Integer, String, Integer, Integer, String)
-     */
-    public BaseResult<String> activeCalendarView(String server) {
-        return activeCalendarView(server, 15);
-    }
-
-    /**
      * 活动月历
      *
      * @param num 预测时间，预测指定时间内的日常，默认值 : 15。
@@ -118,32 +74,6 @@ public class ApiService {
         params.put("server", server);
         RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
         return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * activeListCalendar 的图片服务器
-     *
-     * @param server 区服名称，查找该区服的记录。
-     * @param num    预测时间，预测指定时间的日常，最少为7
-     * @param robot  描述文本，一般设置机器人名称，
-     * @param cache  设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭。
-     * @return 图片地址
-     */
-    public BaseResult<String> activeListCalendarView(String server, int num, String robot, Integer cache) {
-        MethodEnum methodEnum = MethodEnum.VIEW_ACTIVE_LIST_CALENDAR;
-        Map<String, Object> params = new HashMap<>();
-        params.put("server", server);
-        params.put("num", num);
-        addViewParam(params, robot, cache, null);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * @see ApiService#activeListCalendarView(String, int, String, Integer)
-     */
-    public BaseResult<String> activeListCalendarView(String server, int num) {
-        return activeListCalendarView(server, num, null, null);
     }
 
     /**
@@ -193,31 +123,6 @@ public class ApiService {
         params.put("map", map);
         RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
         return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * 鲜花价格 图片服务
-     *
-     * @param server 区服名称，查找目标区服鲜花最高价格线路，
-     * @param robot  描述文本，一般设置机器人名称，
-     * @param cache  设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭。
-     * @param scale  网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大，
-     * @return 图片地址
-     */
-    public BaseResult<String> homeFlowerView(String server, String robot, Integer cache, Integer scale) {
-        MethodEnum methodEnum = MethodEnum.VIEW_HOME_FLOWER;
-        Map<String, Object> params = new HashMap<>();
-        params.put("server", server);
-        addViewParam(params, robot, cache, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * @see ApiService#homeFlowerView(String, String, Integer, Integer)
-     */
-    public BaseResult<String> homeFlowerView(String server) {
-        return homeFlowerView(server, null, null, null);
     }
 
     /**
@@ -339,28 +244,6 @@ public class ApiService {
         return getResultRealData(requestResult, methodEnum);
     }
 
-    /**
-     * 维护公告 图片服务
-     *
-     * @param scale 网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大，
-     * @param robot 描述文本，一般设置机器人名称，
-     * @param cache 设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭。
-     * @return
-     */
-    public BaseResult<String> newsAnnounceView(Integer scale, String robot, Integer cache) {
-        MethodEnum methodEnum = MethodEnum.VIEW_WEB_NEWS_ANNOUNCE;
-        Map<String, Object> params = new HashMap<>();
-        addViewParam(params, robot, cache, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * @see ApiService#newsAnnounceView(Integer, String, Integer)
-     */
-    public BaseResult<String> newsAnnounceView() {
-        return newsAnnounceView(1, null, 1);
-    }
 
     /**
      * 撩人骚话
@@ -412,48 +295,6 @@ public class ApiService {
     }
 
     /**
-     * 金币比例-图片服务
-     *
-     * @param server 区服名称，查找目标区服的金价比例信息，
-     * @param scale  网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大，
-     * @param cache  设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭。
-     * @param robot  描述文本，一般设置机器人名称，
-     * @return 图片地址
-     */
-    public BaseResult<String> tradeDemonView(String server, Integer scale, Integer cache, String robot) {
-        MethodEnum methodEnum = MethodEnum.VIEW_TRADE_DEMON;
-        Map<String, Object> params = new HashMap<>();
-        params.put("server", server);
-        addViewParam(params, robot, cache, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * @see ApiService#tradeDemonView(String, Integer, Integer, String)
-     */
-    public BaseResult<String> tradeDemonView(String server) {
-        return tradeDemonView(server, 1, 1, null);
-    }
-
-    /**
-     * 金币比例-图片服务-全服
-     *
-     * @param robot 描述文本，一般设置机器人名称，
-     * @param scale 网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大，
-     * @param cache 设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭。
-     * @return 图片地址
-     */
-    public BaseResult<String> tradeServerDemonView(String robot, Integer scale, Integer cache) {
-        MethodEnum methodEnum = MethodEnum.VIEW_TRADE_SERVER_DEMON;
-        Map<String, Object> params = new HashMap<>();
-        addViewParam(params, robot, cache, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-    }
-
-
-    /**
      * 奇遇记录
      *
      * @param server 区服名称，查找目标区服的数据，
@@ -469,37 +310,6 @@ public class ApiService {
         params.put("ticket", ticket);
         RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
         return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * 奇遇记录 - 图片服务
-     *
-     * @param scale  网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大
-     * @param server 区服名称，查找目标区服的数据，
-     * @param name   角色名称，筛选角色记录，
-     * @param filter 是否过滤，过滤无效的奇遇，需要提供有效的ticket，默认值 : 1为开启，0为关闭，
-     * @param robot  描述文本，一般设置机器人名称，
-     * @param ticket 推栏标识，检查并补充奇遇的完整性，
-     * @return 图片地址
-     */
-    public BaseResult<String> luckAdventureView(Integer scale, String server, String name, Integer filter, String robot, String ticket) {
-        MethodEnum methodEnum = MethodEnum.VIEW_LUCK_ADVENTURE;
-        Map<String, Object> params = new HashMap<>();
-        params.put("server", server);
-        params.put("name", name);
-        params.put("ticket", ticket);
-        params.put("filter", filter);
-        params.put("scale", scale);
-        params.put("robot", robot);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * @see ApiService#luckAdventureView(Integer, String, String, Integer, String, String)
-     */
-    public BaseResult<String> luckAdventureView(String server, String name, String ticket) {
-        return luckAdventureView(1, server, name, 1, null, ticket);
     }
 
     /**
@@ -521,34 +331,6 @@ public class ApiService {
     }
 
     /**
-     * 奇遇统计 图片服务
-     *
-     * @param scale  网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大，
-     * @param server 区服名称，查找目标区服的奇遇记录，
-     * @param name   奇遇名称，筛选奇遇记录，
-     * @param robot  描述文本，一般设置机器人名称，
-     * @return 图片地址
-     */
-    public BaseResult<String> luckStatisticalView(Integer scale, String server, String name, String robot) {
-        MethodEnum methodEnum = MethodEnum.VIEW_LUCK_STATISTICAL;
-        Map<String, Object> params = new HashMap<>();
-        params.put("server", server);
-        params.put("name", name);
-        params.put("scale", scale);
-        params.put("robot", robot);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * @see ApiService#luckStatisticalView(Integer, String, String, String)
-     */
-    public BaseResult<String> luckStatisticalView(String server, String name, String robot) {
-        return luckStatisticalView(1, server, name, robot);
-    }
-
-
-    /**
      * 奇遇汇总
      *
      * @param server 区服名称，查找目标区服的记录，
@@ -565,31 +347,6 @@ public class ApiService {
     }
 
     /**
-     * 奇遇汇总 图片服务
-     *
-     * @param scale  网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大，
-     * @param server 区服名称，查找目标区服的记录，
-     * @param robot  描述文本，一般设置机器人名称，
-     * @param cache  设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭，
-     * @return 图片地址
-     */
-    public BaseResult<String> luckCollectView(Integer scale, String server, String robot, Integer cache) {
-        MethodEnum methodEnum = MethodEnum.VIEW_LUCK_COLLECT;
-        Map<String, Object> params = new HashMap<>();
-        params.put("server", server);
-        addViewParam(params, robot, cache, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * @see ApiService#luckCollectView(Integer, String, String, Integer)
-     */
-    public BaseResult<String> luckCollectView(String server) {
-        return luckCollectView(1, server, null, 1);
-    }
-
-    /**
      * 全服统计
      *
      * @param name  奇遇名称，查找目标区服的奇遇记录，
@@ -603,30 +360,6 @@ public class ApiService {
         params.put("limit", limit);
         RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
         return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * 全服统计 图片服务
-     *
-     * @param scale 网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大，
-     * @param name  奇遇名称，查找目标区服的奇遇记录，
-     * @param robot 描述文本，一般设置机器人名称，
-     * @return 图片地址
-     */
-    public BaseResult<String> luckServerStatisticalView(Integer scale, String name, String robot) {
-        MethodEnum methodEnum = MethodEnum.VIEW_LUCK_SERVER_STATISTICAL;
-        Map<String, Object> params = new HashMap<>();
-        params.put("name", name);
-        addViewParam(params, robot, null, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * @see ApiService#luckServerStatisticalView(Integer, String, String)
-     */
-    public BaseResult<String> luckServerStatisticalView(String name) {
-        return luckServerStatisticalView(1, name, null);
     }
 
     /**
@@ -651,38 +384,6 @@ public class ApiService {
     }
 
     /**
-     * 名剑战绩 图片服务
-     * 未输入比赛模式时，将返回推栏全部角色近期的比赛记录(推栏个人页面，会出现返回结果非指定角色数据)
-     *
-     * @param scale  网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大，
-     * @param server 区服名称，查找目标区服的比赛记录，
-     * @param name   角色名称，筛选记录，
-     * @param mode   比赛模式，筛选记录，
-     * @param robot  描述文本，一般设置机器人名称，
-     * @param ticket 推栏标识，检查请求权限，
-     * @return 图片地址
-     */
-    public BaseResult<String> matchRecentView(Integer scale, String server, String name, Integer mode, String robot, String ticket) {
-        MethodEnum methodEnum = MethodEnum.VIEW_MATCH_RECENT;
-        Map<String, Object> params = new HashMap<>();
-        params.put("name", name);
-        params.put("server", server);
-        params.put("mode", mode);
-        params.put("ticket", ticket);
-        addViewParam(params, robot, null, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * @see ApiService#matchRecentView(Integer, String, String, Integer, String, String)
-     */
-    public BaseResult<String> matchRecentView(String server, String name, String ticket) {
-        return matchRecentView(1, server, name, null, null, ticket);
-    }
-
-
-    /**
      * 名剑排行
      *
      * @param mode   比赛模式，查找目标比赛模式的记录，默认值 : 33，
@@ -698,33 +399,6 @@ public class ApiService {
         params.put("ticket", ticket);
         RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
         return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * 名剑排行 图片服务
-     *
-     * @param scale  网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大，
-     * @param mode   比赛模式，查找目标比赛模式的记录，默认值 : 33，
-     * @param robot  描述文本，一般设置机器人名称，
-     * @param cache  设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭，
-     * @param ticket 推栏标识，检查请求权限，
-     * @return 图片地址
-     */
-    public BaseResult<String> matchAwesomeView(Integer scale, Integer mode, String robot, Integer cache, String ticket) {
-        MethodEnum methodEnum = MethodEnum.VIEW_MATCH_AWESOME;
-        Map<String, Object> params = new HashMap<>();
-        params.put("mode", mode);
-        params.put("ticket", ticket);
-        addViewParam(params, robot, cache, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * @see ApiService#matchAwesomeView(Integer, Integer, String, Integer, String)
-     */
-    public BaseResult<String> matchAwesomeView(Integer mode, String ticket) {
-        return matchAwesomeView(1, mode, null, 1, ticket);
     }
 
     /**
@@ -744,34 +418,6 @@ public class ApiService {
     }
 
     /**
-     * 名剑统计  图片服务
-     *
-     * @param scale  网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大，
-     * @param mode   比赛模式，查找目标比赛模式的记录，默认值 : 33，
-     * @param robot  描述文本，一般设置机器人名称，
-     * @param cache  设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭，
-     * @param ticket 推栏标识，检查请求权限，
-     * @return 图片地址
-     */
-    public BaseResult<String> matchSchoolsView(Integer scale, Integer mode, String robot, Integer cache, String ticket) {
-        MethodEnum methodEnum = MethodEnum.VIEW_MATCH_SCHOOLS;
-        Map<String, Object> params = new HashMap<>();
-        params.put("mode", mode);
-        params.put("ticket", ticket);
-        addViewParam(params, robot, cache, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * @see ApiService#matchSchoolsView(Integer, Integer, String, Integer, String)
-     */
-    public BaseResult<String> matchSchoolsView(Integer mode, String ticket) {
-        return matchSchoolsView(1, mode, null, 1, ticket);
-    }
-
-
-    /**
      * 团队招募
      *
      * @param server  区服名称，查找目标区服的招募信息，
@@ -787,34 +433,6 @@ public class ApiService {
         params.put("table", table);
         RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
         return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * 团队招募 图片服务
-     *
-     * @param scale   网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大，
-     * @param server  区服名称，查找目标区服的招募信息，
-     * @param keyword 关键字，模糊匹配记录，用=关键字完全匹配记录，
-     * @param robot   描述文本，一般设置机器人名称，
-     * @param cache   设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭。
-     * @return 图片地址
-     */
-    public BaseResult<String> memberRecruitView(Integer scale, String server, String keyword, String robot, Integer cache, Integer table) {
-        MethodEnum methodEnum = MethodEnum.VIEW_MEMBER_RECRUIT;
-        Map<String, Object> params = new HashMap<>();
-        params.put("server", server);
-        params.put("keyword", keyword);
-        params.put("table", table);
-        addViewParam(params, robot, cache, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * @see ApiService#memberRecruitView(Integer, String, String, String, Integer, Integer)
-     */
-    public BaseResult<String> memberRecruitView(String server, String keyword, Integer table) {
-        return memberRecruitView(1, server, keyword, null, 1, table);
     }
 
     /**
@@ -857,39 +475,6 @@ public class ApiService {
     }
 
     /**
-     * 风云榜单 图片服务
-     *
-     * @param scale  网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大，
-     * @param server 区服名称，查找目标区服的榜单，
-     * @param table  [name] 榜单类型与榜单名称，[table] 与 [name] 的关联
-     * @param name   [name] 榜单类型与榜单名称，[table] 与 [name] 的关联
-     *               [table] : 个人，[name] : [名士五十强 老江湖五十强 兵甲藏家五十强 名师五十强 阵营英雄五十强 薪火相传五十强 庐园广记一百强]，
-     *               [table] : 帮会，[name] : [浩气神兵宝甲五十强 恶人神兵宝甲五十强 浩气爱心帮会五十强 恶人爱心帮会五十强]，
-     *               [table] : 阵营，[name] : [赛季恶人五十强 赛季浩气五十强 上周恶人五十强 上周浩气五十强 本周恶人五十强 本周浩气五十强]，
-     *               [table] : 试炼，[name] : [万花 七秀 少林 纯阳 天策 五毒 唐门 明教 苍云 长歌 藏剑 丐帮 霸刀 蓬莱 凌雪 衍天 药宗 刀宗]
-     * @param robot  描述文本，一般设置机器人名称，
-     * @param cache  设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭，
-     * @return 图片地址
-     */
-    public BaseResult<String> rankStatisticalView(Integer scale, String server, String table, String name, String robot, Integer cache) {
-        MethodEnum methodEnum = MethodEnum.VIEW_RANK_STATISTICAL;
-        Map<String, Object> params = new HashMap<>();
-        params.put("server", server);
-        params.put("table", table);
-        params.put("name", name);
-        addViewParam(params, robot, cache, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * @see ApiService#rankStatisticalView(Integer, String, String, String, String, Integer)
-     */
-    public BaseResult<String> rankStatisticalView(String server, String table, String name) {
-        return rankStatisticalView(1, server, table, name, null, 1);
-    }
-
-    /**
      * 角色信息
      *
      * @param server 区服名称，查找目标区服的记录，
@@ -926,37 +511,6 @@ public class ApiService {
     }
 
     /**
-     * 成就百科 图片服务
-     *
-     * @param scale  网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大，
-     * @param server 区服名称，查找目标区服的记录，
-     * @param role   角色名称，筛选记录
-     * @param name   成就/系列名称，查询指定成就/系列的完成进度
-     * @param robot  描述文本，一般设置机器人名称
-     * @param cache  设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭，
-     * @param ticket 推栏标识，检查请求权限
-     * @return 图片地址
-     */
-    public BaseResult<String> roleAchievementView(Integer scale, String server, String role, String name, String robot, Integer cache, String ticket) {
-        MethodEnum methodEnum = MethodEnum.VIEW_ROLE_ACHIEVEMENT;
-        Map<String, Object> params = new HashMap<>();
-        params.put("server", server);
-        params.put("name", name);
-        params.put("role", role);
-        params.put("ticket", ticket);
-        addViewParam(params, robot, cache, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * @see ApiService#roleAchievementView(Integer, String, String, String, String, Integer, String)
-     */
-    public BaseResult<String> roleAchievementView(String server, String role, String name, String ticket) {
-        return roleAchievementView(1, server, role, name, null, 1, ticket);
-    }
-
-    /**
      * 装备属性
      *
      * @param server 区服名称，查找目标区服的角色属性记录，
@@ -972,35 +526,6 @@ public class ApiService {
         params.put("ticket", ticket);
         RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
         return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * 装备属性 图片服务
-     *
-     * @param scale  网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大，
-     * @param server 区服名称，查找目标区服的角色属性记录，
-     * @param name   角色名称，筛选记录，
-     * @param robot  描述文本，一般设置机器人名称
-     * @param cache  设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭
-     * @param ticket 推栏标识，检查请求权限
-     * @return 图片地址
-     */
-    public BaseResult<String> roleAttributeView(Integer scale, String server, String name, String robot, Integer cache, String ticket) {
-        MethodEnum methodEnum = MethodEnum.VIEW_ROLE_ATTRIBUTE;
-        Map<String, Object> params = new HashMap<>();
-        params.put("server", server);
-        params.put("name", name);
-        params.put("ticket", ticket);
-        addViewParam(params, robot, cache, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * @see ApiService#roleAttributeView(Integer, String, String, String, Integer, String)
-     */
-    public BaseResult<String> roleAttributeView(String server, String name, String ticket) {
-        return roleAttributeView(1, server, name, null, 1, ticket);
     }
 
     /**
@@ -1021,34 +546,6 @@ public class ApiService {
         return getResultRealData(requestResult, methodEnum);
     }
 
-    /**
-     * 副本记录 图片服务
-     *
-     * @param scale  网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大，
-     * @param server 区服名称，查找目标区服的角色属性记录，
-     * @param name   角色名称，筛选记录，
-     * @param robot  描述文本，一般设置机器人名称
-     * @param cache  设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭
-     * @param ticket 推栏标识，检查请求权限
-     * @return 图片地址
-     */
-    public BaseResult<String> roleTeamCdListView(Integer scale, String server, String name, String robot, Integer cache, String ticket) {
-        MethodEnum methodEnum = MethodEnum.VIEW_ROLE_CDLIST;
-        Map<String, Object> params = new HashMap<>();
-        params.put("server", server);
-        params.put("name", name);
-        params.put("ticket", ticket);
-        addViewParam(params, robot, cache, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * @see ApiService#roleTeamCdListView(Integer, String, String, String, Integer, String)
-     */
-    public BaseResult<String> roleTeamCdListView(String server, String name, String ticket) {
-        return roleTeamCdListView(1, server, name, null, null, ticket);
-    }
 
     /**
      * 角色更新
@@ -1087,35 +584,6 @@ public class ApiService {
 
     }
 
-    /**
-     * 资历榜单  图片服务
-     *
-     * @param scale  网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大
-     * @param school 门派简称，查找目标心法的榜单，默认值 : ALL
-     * @param server 区服名称，筛选记录，默认值 : ALL
-     * @param robot  描述文本，一般设置机器人名称
-     * @param cache  设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭
-     * @param ticket 推栏标识，检查请求权限
-     * @return 图片地址
-     */
-    public BaseResult<String> schoolSeniorityView(Integer scale, String school, String server, String robot, Integer cache, String ticket) {
-        MethodEnum methodEnum = MethodEnum.VIEW_SCHOOL_SENIORITY;
-        Map<String, Object> params = new HashMap<>();
-        params.put("server", server);
-        params.put("school", school);
-        params.put("ticket", ticket);
-        addViewParam(params, robot, cache, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-
-    }
-
-    /**
-     * @see ApiService#schoolSeniorityView(Integer, String, String, String, Integer, String)
-     */
-    public BaseResult<String> schoolSeniorityView(String school, String server, String ticket) {
-        return schoolSeniorityView(1, school, server, null, 1, ticket);
-    }
 
     /**
      * 奇穴效果
@@ -1162,34 +630,6 @@ public class ApiService {
     }
 
     /**
-     * 沙盘信息  图片服务
-     *
-     * @param scale  网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大
-     * @param server 区服名称，查找目标区服的沙盘信息
-     * @param robot  描述文本，一般设置机器人名称
-     * @param cache  设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭
-     * @param desc   描述文本，可设置任意文字，
-     * @return 图片地址
-     */
-    public BaseResult<String> serverSandView(Integer scale, String server, String robot, Integer cache, String desc) {
-        MethodEnum methodEnum = MethodEnum.VIEW_SERVER_SAND;
-        Map<String, Object> params = new HashMap<>();
-        params.put("server", server);
-        params.put("desc", desc);
-        addViewParam(params, robot, cache, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-
-    }
-
-    /**
-     * @see ApiService#serverSandView(Integer, String, String, Integer, String)
-     */
-    public BaseResult<String> serverSandView(String server) {
-        return serverSandView(1, server, null, 1, null);
-    }
-
-    /**
      * 阵营事件
      *
      * @param name  阵营名称，筛选记录
@@ -1205,29 +645,6 @@ public class ApiService {
         return getResultRealData(requestResult, methodEnum);
     }
 
-    /**
-     * 阵营事件  图片服务
-     *
-     * @param scale 网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大
-     * @param robot 描述文本，一般设置机器人名称
-     * @param cache 设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭，
-     * @return 图片地址
-     */
-    public BaseResult<String> serverEventView(Integer scale, String robot, Integer cache) {
-        MethodEnum methodEnum = MethodEnum.VIEW_SERVER_EVENT;
-        Map<String, Object> params = new HashMap<>();
-        addViewParam(params, robot, cache, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-
-    }
-
-    /**
-     * @see ApiService#serverEventView(Integer, String, Integer)
-     */
-    public BaseResult<String> serverEventView() {
-        return serverEventView(1, null, 1);
-    }
 
     /**
      * 诛恶事件
@@ -1289,33 +706,6 @@ public class ApiService {
     }
 
     /**
-     * 物品价格  图片服务
-     *
-     * @param scale 网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大，
-     * @param name  外观名称，查找目标外观的价格信息，
-     * @param robot 描述文本，一般设置机器人名称，
-     * @param cache 设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭
-     * @return 图片地址
-     */
-    public BaseResult<String> tradeRecordView(Integer scale, String name, String robot, Integer cache) {
-        MethodEnum methodEnum = MethodEnum.VIEW_TRADE_RECORD;
-        Map<String, Object> params = new HashMap<>();
-        params.put("name", name);
-        addViewParam(params, robot, cache, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-
-    }
-
-    /**
-     * jx3api.api.http.ApiService#tradeRecordView(java.lang.Integer, java.lang.String, java.lang.String, java.lang.Integer)
-     */
-    public BaseResult<String> tradeRecordView(String name) {
-        return tradeRecordView(1, name, null, 1);
-    }
-// TODO: 2024/6/23 贴吧记录，后面加
-
-    /**
      * 挂件详情
      *
      * @param name 挂件名称，查找目标挂件详细信息。
@@ -1336,7 +726,7 @@ public class ApiService {
      * @param name 外观名称，查找目标外观物价信息。
      * @return TiebaItemRecordsData List
      */
-    public BaseResult<List<TiebaItemRecordsData>> tiebaItemRecords(String name,String server,Integer limit) {
+    public BaseResult<List<TiebaItemRecordsData>> tiebaItemRecords(String name, String server, Integer limit) {
         MethodEnum methodEnum = MethodEnum.DATA_TIEBA_ITEM_RECORDS;
         Map<String, Object> params = new HashMap<>();
         params.put("name", name);
@@ -1389,30 +779,6 @@ public class ApiService {
         RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
         return getResultRealData(requestResult, methodEnum);
 
-    }
-
-    /**
-     * 百战首领  图片服务
-     *
-     * @param scale 网页规模，设置网页分辨率，可选：[1/2]，默认值：1，设置的值越大图片体积也会越大
-     * @param robot 描述文本，一般设置机器人名称，
-     * @param cache 设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭
-     * @return 图片地址
-     */
-    public BaseResult<String> activeMonsterView(Integer scale, String robot, Integer cache) {
-        MethodEnum methodEnum = MethodEnum.VIEW_ACTIVE_MONSTER;
-        Map<String, Object> params = new HashMap<>();
-        addViewParam(params, robot, cache, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-
-    }
-
-    /**
-     * @see ApiService#activeMonsterView(Integer, String, Integer)
-     */
-    public BaseResult<String> activeMonsterView() {
-        return activeMonsterView(1, null, 1);
     }
 
     /**
@@ -1486,38 +852,6 @@ public class ApiService {
         return getResultRealData(requestResult, methodEnum);
     }
 
-    /**
-     * 全服榜单 图片服务
-     *
-     * @param scale 网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大，
-     * @param table 榜单类型
-     * @param name  榜单名称
-     *              [table] 与 [name] 的关联：
-     *              [table] : 个人，[name] : [名士五十强 老江湖五十强 兵甲藏家五十强 名师五十强 阵营英雄五十强 薪火相传五十强 庐园广记一百强]，
-     *              [table] : 帮会，[name] : [浩气神兵宝甲五十强 恶人神兵宝甲五十强 浩气爱心帮会五十强 恶人爱心帮会五十强]，
-     *              [table] : 阵营，[name] : [赛季恶人五十强 赛季浩气五十强 上周恶人五十强 上周浩气五十强 本周恶人五十强 本周浩气五十强]，
-     *              [table] : 试炼，[name] : [万花 七秀 少林 纯阳 天策 五毒 唐门 明教 苍云 长歌 藏剑 丐帮 霸刀 蓬莱 凌雪 衍天 药宗 刀宗]
-     * @param robot 描述文本，一般设置机器人名称，
-     * @param cache 设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭，
-     * @return 图片地址
-     */
-    public BaseResult<String> rankServerStatisticalView(Integer scale, String table, String name, String robot, Integer cache) {
-        MethodEnum methodEnum = MethodEnum.VIEW_RANK_SERVER_STATISTICAL;
-        Map<String, Object> params = new HashMap<>();
-        params.put("table", table);
-        params.put("name", name);
-        addViewParam(params, robot, cache, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-
-    }
-
-    /**
-     * @see ApiService#rankServerStatisticalView(Integer, String, String, String, Integer)
-     */
-    public BaseResult<String> rankServerStatisticalView(String table, String name) {
-        return rankServerStatisticalView(1, table, name, null, 1);
-    }
 
     /**
      * 掉落统计
@@ -1538,32 +872,6 @@ public class ApiService {
 
     }
 
-    /**
-     * 掉落统计 图片服务
-     *
-     * @param scale  网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大，
-     * @param server 区服名称，查找目标区服的掉落记录，
-     * @param name   物品名称，筛选记录，
-     * @param robot  描述文本，一般设置机器人名称，
-     * @return 图片地址
-     */
-    public BaseResult<String> valuablesStatisticalView(Integer scale, String server, String name, String robot) {
-        MethodEnum methodEnum = MethodEnum.VIEW_VALUABLES_STATISTICAL;
-        Map<String, Object> params = new HashMap<>();
-        params.put("server", server);
-        params.put("name", name);
-        addViewParam(params, robot, null, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-
-    }
-
-    /**
-     * @see ApiService#valuablesStatisticalView(Integer, String, String, String)
-     */
-    public BaseResult<String> valuablesStatisticalView(String server, String name) {
-        return valuablesStatisticalView(1, server, name, null);
-    }
 
     /**
      * 全服掉落
@@ -1580,31 +888,6 @@ public class ApiService {
         RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
         return getResultRealData(requestResult, methodEnum);
 
-    }
-
-    /**
-     * 全服掉落 图片服务
-     *
-     * @param scale 网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大
-     * @param name  物品名称，查找目标物品的掉落记录
-     * @param robot 描述文本，一般设置机器人名称
-     * @return 图片地址
-     */
-    public BaseResult<String> valuablesServerStatisticalView(Integer scale, String name, String robot) {
-        MethodEnum methodEnum = MethodEnum.VIEW_VALUABLES_SERVER_STATISTICAL;
-        Map<String, Object> params = new HashMap<>();
-        params.put("name", name);
-        addViewParam(params, robot, null, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-
-    }
-
-    /**
-     * @see ApiService#valuablesServerStatisticalView(Integer, String, String)
-     */
-    public BaseResult<String> valuablesServerStatisticalView(String name) {
-        return valuablesServerStatisticalView(1, name, null);
     }
 
     /**
@@ -1625,31 +908,6 @@ public class ApiService {
     }
 
     /**
-     * 掉落汇总 图片服务
-     *
-     * @param scale  网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大
-     * @param server 区服名称，汇总目标区服的掉落记录
-     * @param robot  描述文本，一般设置机器人名称
-     * @return 图片地址
-     */
-    public BaseResult<String> valuablesCollectView(Integer scale, String server, String robot) {
-        MethodEnum methodEnum = MethodEnum.VIEW_VALUABLES_COLLECT;
-        Map<String, Object> params = new HashMap<>();
-        params.put("server", server);
-        addViewParam(params, robot, null, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-
-    }
-
-    /**
-     * @see ApiService#valuablesCollectView(Integer, String, String)
-     */
-    public BaseResult<String> valuablesCollectView(String server) {
-        return valuablesCollectView(1, server, null);
-    }
-
-    /**
      * 烟花记录
      *
      * @param server 区服名称，查找目标区服的烟花记录
@@ -1664,33 +922,6 @@ public class ApiService {
         RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
         return getResultRealData(requestResult, methodEnum);
 
-    }
-
-    /**
-     * 烟花记录 图片服务
-     *
-     * @param scale  网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大
-     * @param server 区服名称，查找目标区服的烟花记录
-     * @param name   角色名称，筛选记录
-     * @param robot  描述文本，一般设置机器人名称
-     * @param cache  设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭
-     * @return 图片地址
-     */
-    public BaseResult<String> watchRecordView(Integer scale, String server, String name, String robot, Integer cache) {
-        MethodEnum methodEnum = MethodEnum.VIEW_WATCH_RECORD;
-        Map<String, Object> params = new HashMap<>();
-        params.put("server", server);
-        params.put("name", name);
-        addViewParam(params, robot, cache, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * @see ApiService#watchRecordView(Integer, String, String, String, Integer)
-     */
-    public BaseResult<String> watchRecordView(String server, String name) {
-        return watchRecordView(1, server, name, null, 1);
     }
 
     /**
@@ -1712,33 +943,6 @@ public class ApiService {
     }
 
     /**
-     * 烟花统计 图片服务
-     *
-     * @param scale  网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大
-     * @param server 区服名称，查找目标区服的烟花记录
-     * @param name   烟花名称，筛选记录
-     * @param robot  描述文本，一般设置机器人名称
-     * @param cache  设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭
-     * @return 图片地址
-     */
-    public BaseResult<String> watchStatisticalView(Integer scale, String server, String name, String robot, Integer cache) {
-        MethodEnum methodEnum = MethodEnum.VIEW_WATCH_STATISTICAL;
-        Map<String, Object> params = new HashMap<>();
-        params.put("server", server);
-        params.put("name", name);
-        addViewParam(params, robot, cache, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * @see ApiService#watchStatisticalView(Integer, String, String, String, Integer)
-     */
-    public BaseResult<String> watchStatisticalView(String server, String name) {
-        return watchStatisticalView(1, server, name, null, 1);
-    }
-
-    /**
      * 烟花汇总
      *
      * @param server 区服名称，查找目标区服的烟花记录，
@@ -1752,32 +956,6 @@ public class ApiService {
         params.put("num", num);
         RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
         return getResultRealData(requestResult, methodEnum);
-    }
-
-    /**
-     * 烟花汇总 图片服务
-     *
-     * @param scale  网页规模，设置网页分辨率，可选范围：[1/2]，默认值：1，设置的值越大图片体积也会越大
-     * @param server 区服名称，查找目标区服的烟花记录，
-     * @param robot  描述文本，一般设置机器人名称，
-     * @param cache  设置缓存，可有效提高响应速度，默认值：1为开启，0为关闭，
-     * @return 图片地址
-     */
-    public BaseResult<String> watchCollectView(Integer scale, String server, String robot, Integer cache) {
-        MethodEnum methodEnum = MethodEnum.VIEW_WATCH_COLLECT;
-        Map<String, Object> params = new HashMap<>();
-        params.put("server", server);
-        addViewParam(params, robot, cache, scale);
-        RequestResult requestResult = doPostRequest(methodEnum.getMethodPath(), params);
-        return getResultRealData(requestResult, methodEnum);
-
-    }
-
-    /**
-     * @see ApiService#watchCollectView(Integer, String, String, Integer)
-     */
-    public BaseResult<String> watchCollectView(String server) {
-        return watchCollectView(1, server, null, 1);
     }
 
     /**

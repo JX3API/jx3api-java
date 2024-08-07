@@ -45,16 +45,12 @@ public class NormalTest {
     void activeCalendar() {
         BaseResult<ActiveCurrentData> activeCurrentData = apiService.activeCalendar("长安城", 0);
         Assert.notNull(activeCurrentData, "日常信息-数据 测试失败");
-        BaseResult<String> url = apiService.activeCalendarView("长安城", 7);
-        Assert.isTrue(url != null && url.getData() != null && url.getData().startsWith("http"), "日常信息-图片服务 测试失败");
     }
 
     @Test
     void activeListCalendar() {
         BaseResult<ActiveCalendarData> activeCurrentData = apiService.activeListCalendar("长安城", 7);
         Assert.notNull(activeCurrentData, "日常信息-数据 测试失败");
-        BaseResult<String> url = apiService.activeListCalendarView("长安城", 7);
-        Assert.isTrue(url != null && url.getData() != null && url.getData().startsWith("http"), "日常信息-图片服务 测试失败");
     }
 
     @Test
@@ -74,8 +70,6 @@ public class NormalTest {
     void hoeFlower() {
         BaseResult<Map<String, Object>> baseResult = apiService.homeFlower("梦江南", "绣球花", "九寨沟·镜海");
         Assert.notNull(baseResult, "测试失败");
-        BaseResult<String> baseResult1 = apiService.homeFlowerView("长安城");
-        Assert.isTrue(baseResult1 != null && baseResult1.getData() != null && baseResult1.getData().startsWith("http"), "测试失败");
     }
 
     @Test
@@ -132,8 +126,6 @@ public class NormalTest {
     void newsAnnounce() {
         BaseResult<List<WebNewsAnnounceData>> result = apiService.newsAnnounce(2);
         assertDataResult(result);
-        BaseResult<String> result1 = apiService.newsAnnounceView();
-        assertViewResult(result1);
     }
 
     @Test
@@ -146,8 +138,6 @@ public class NormalTest {
     void roleTeamCdList() {
         BaseResult<RoleTeamCdListData> result = apiService.roleTeamCdList("唯我独尊", "夜温言@长安城", ticket);
         assertDataResult(result);
-        BaseResult<String> result1 = apiService.roleTeamCdListView("唯我独尊", "夜温言@长安城", ticket);
-        assertViewResult(result1);
     }
 
     @Test
@@ -172,8 +162,6 @@ public class NormalTest {
     void activeMonster(){
         BaseResult<ActiveMonsterData> baseResult =  apiService.activeMonster();
         assertDataResult(baseResult);
-        BaseResult<String> baseResult1= apiService.activeMonsterView();
-        assertViewResult(baseResult1);
     }
     @Test
     void horseRecords(){

@@ -70,7 +70,7 @@ class StarterTestApplicationTests {
     @Test
     void apiTest() {
 //        System.out.println(apiService.activeCalendar("长安城", 7));
-        System.out.println(apiService.activeCalendarView("长安城"));
+        System.out.println(apiService.activeCalendar("长安城",0));
 //        System.out.println(apiService.examAnswer("古琴有几根弦", 10));
     }
 }
