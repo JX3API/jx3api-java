@@ -3,17 +3,26 @@ The Java SDK to the JX3API.
 
 使用说明 
 
-1、由于没有推送到中央仓库，所以需要先本地安装一下，方便通过pom引入
+0、喜报，终于搞明白怎么推送到中央仓库，现在可以选择直接引用中央仓库配置来引用了
+```
+        <dependency>
+            <groupId>io.github.jx3api</groupId>
+            <artifactId>jx3-api-autoconfigure</artifactId>
+            <version>1.0</version>
+        </dependency>         
+```
+
+1、也可以本地安装一下，再引入
 ```
 mvn clean install -DskipTests
 ```
 2、在pom.xml中引入
 ```
-<dependency>
-    <groupId>org.jx3api</groupId>
-    <artifactId>jx3-api-autoconfigure</artifactId>
-    <version>1.0-SNAPSHOT</version>
-</dependency>            
+        <dependency>
+            <groupId>io.github.jx3api</groupId>
+            <artifactId>jx3-api-autoconfigure</artifactId>
+            <version>1.0</version>
+        </dependency>         
 ```
 3、实现`jx3api.api.ws.IWsDataPushService`该接口，由于sdk无法判断使用者到底要做什么，所以你必须要自己实现一个
 
